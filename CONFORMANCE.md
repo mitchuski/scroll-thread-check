@@ -18,6 +18,12 @@ The three honesty levels (R2):
 `cargo xtask audit-limits` fails if any code path returns an error the
 model does not sanction.
 
+## frame
+
+| ID | Level | Statement |
+| --- | --- | --- |
+| `FR-01` | `build` | With a working worker, the page loads and verifies the archive only in that worker before using its identities or guest |
+
 ## scroll_thread_check
 
 | ID | Level | Statement |
