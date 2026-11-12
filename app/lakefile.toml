@@ -1,6 +1,6 @@
-name = "PrismTemplateContract"
+name = "PrismScrollThreadCheck"
 version = "0.1.0"
-defaultTargets = ["PrismTemplateContract"]
+defaultTargets = ["PrismScrollThreadCheck"]
 
 [[lean_lib]]
-name = "PrismTemplateContract"
+name = "PrismScrollThreadCheck"

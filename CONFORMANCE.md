@@ -18,17 +18,15 @@ The three honesty levels (R2):
 `cargo xtask audit-limits` fails if any code path returns an error the
 model does not sanction.
 
-## contract
+## scroll_thread_check
 
 | ID | Level | Statement |
 | --- | --- | --- |
-| `TC-01` | `build` | The checker answers conformant exactly when every universal policy file's observed digest equals its locked digest |
-
-## frame
-
-| ID | Level | Statement |
-| --- | --- | --- |
-| `FR-01` | `build` | With a working worker, the page loads and verifies the archive only in that worker before using its identities or guest |
+| `ST-01` | `build` | The app never answers ok when provenance is broken |
+| `ST-02` | `build` | The app never answers ok when walk is reached and outside is some |
+| `ST-03` | `build` | The app never answers ok when walk is lost |
+| `ST-04` | `build` | The app never answers ok when fact is underived |
+| `ST-05` | `build` | The app never answers ok when place is first and kind is not root |
 
 ## Cited authorities
 
