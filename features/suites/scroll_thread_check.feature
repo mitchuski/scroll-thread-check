@@ -32,3 +32,9 @@ Feature: scroll_thread_check
     Given the model in app/src/ScrollThreadCheck.lex.tex
     When the Lean kernel checks inv005Holds during prismpm verify
     Then no request meets breaksInv005
+
+  @ST-06 @build
+  Scenario: The app never answers ok when kind is record and walk is loose
+    Given the model in app/src/ScrollThreadCheck.lex.tex
+    When the Lean kernel checks inv006Holds during prismpm verify
+    Then no request meets breaksInv006

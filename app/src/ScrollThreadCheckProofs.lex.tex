@@ -9,7 +9,7 @@ definition{
   name: breaksInv001,
   parameters: [request : ScrollThreadCheck::Request],
   result: Bool,
-  body: ((((((((((project request place) <? 2) && ((project request kind) <? 7)) && ((project request outside) <? 2)) && ((project request walk) <? 3)) && ((project request rows) <? 4)) && ((project request provenance) <? 3)) && ((project request fact) <? 5)) && ((project request provenance) =? (ScrollThreadCheck::provenanceBroken))) && ((ScrollThreadCheck::judge request) =? (ScrollThreadCheck::answerOk)))
+  body: ((((((((((project request place) <? 2) && ((project request kind) <? 7)) && ((project request outside) <? 2)) && ((project request walk) <? 4)) && ((project request rows) <? 4)) && ((project request provenance) <? 3)) && ((project request fact) <? 5)) && ((project request provenance) =? (ScrollThreadCheck::provenanceBroken))) && ((ScrollThreadCheck::judge request) =? (ScrollThreadCheck::answerOk)))
 }
 
 theorem{
@@ -22,6 +22,7 @@ theorem{
       ScrollThreadCheck::answerFactnoledger,
       ScrollThreadCheck::answerFactunderived,
       ScrollThreadCheck::answerGapunderived,
+      ScrollThreadCheck::answerLooserecord,
       ScrollThreadCheck::answerNoprovenance,
       ScrollThreadCheck::answerOk,
       ScrollThreadCheck::answerRootkind,
@@ -53,6 +54,7 @@ theorem{
       ScrollThreadCheck::rowsMissing,
       ScrollThreadCheck::rowsNone,
       ScrollThreadCheck::rule1,
+      ScrollThreadCheck::rule10,
       ScrollThreadCheck::rule2,
       ScrollThreadCheck::rule3,
       ScrollThreadCheck::rule4,
@@ -61,20 +63,21 @@ theorem{
       ScrollThreadCheck::rule7,
       ScrollThreadCheck::rule8,
       ScrollThreadCheck::rule9,
+      ScrollThreadCheck::walkLoose,
       ScrollThreadCheck::walkLost,
       ScrollThreadCheck::walkReached,
       ScrollThreadCheck::walkUnreached,
       breaksInv001
     ]
   },
-  axioms: [Quot.sound, propext]
+  axioms: [Classical.choice, Quot.sound, propext]
 }
 
 definition{
   name: breaksInv002,
   parameters: [request : ScrollThreadCheck::Request],
   result: Bool,
-  body: (((((((((((project request place) <? 2) && ((project request kind) <? 7)) && ((project request outside) <? 2)) && ((project request walk) <? 3)) && ((project request rows) <? 4)) && ((project request provenance) <? 3)) && ((project request fact) <? 5)) && ((project request walk) =? (ScrollThreadCheck::walkReached))) && ((project request outside) =? (ScrollThreadCheck::outsideSome))) && ((ScrollThreadCheck::judge request) =? (ScrollThreadCheck::answerOk)))
+  body: (((((((((((project request place) <? 2) && ((project request kind) <? 7)) && ((project request outside) <? 2)) && ((project request walk) <? 4)) && ((project request rows) <? 4)) && ((project request provenance) <? 3)) && ((project request fact) <? 5)) && ((project request walk) =? (ScrollThreadCheck::walkReached))) && ((project request outside) =? (ScrollThreadCheck::outsideSome))) && ((ScrollThreadCheck::judge request) =? (ScrollThreadCheck::answerOk)))
 }
 
 theorem{
@@ -87,6 +90,7 @@ theorem{
       ScrollThreadCheck::answerFactnoledger,
       ScrollThreadCheck::answerFactunderived,
       ScrollThreadCheck::answerGapunderived,
+      ScrollThreadCheck::answerLooserecord,
       ScrollThreadCheck::answerNoprovenance,
       ScrollThreadCheck::answerOk,
       ScrollThreadCheck::answerRootkind,
@@ -118,6 +122,7 @@ theorem{
       ScrollThreadCheck::rowsMissing,
       ScrollThreadCheck::rowsNone,
       ScrollThreadCheck::rule1,
+      ScrollThreadCheck::rule10,
       ScrollThreadCheck::rule2,
       ScrollThreadCheck::rule3,
       ScrollThreadCheck::rule4,
@@ -126,6 +131,7 @@ theorem{
       ScrollThreadCheck::rule7,
       ScrollThreadCheck::rule8,
       ScrollThreadCheck::rule9,
+      ScrollThreadCheck::walkLoose,
       ScrollThreadCheck::walkLost,
       ScrollThreadCheck::walkReached,
       ScrollThreadCheck::walkUnreached,
@@ -139,7 +145,7 @@ definition{
   name: breaksInv003,
   parameters: [request : ScrollThreadCheck::Request],
   result: Bool,
-  body: ((((((((((project request place) <? 2) && ((project request kind) <? 7)) && ((project request outside) <? 2)) && ((project request walk) <? 3)) && ((project request rows) <? 4)) && ((project request provenance) <? 3)) && ((project request fact) <? 5)) && ((project request walk) =? (ScrollThreadCheck::walkLost))) && ((ScrollThreadCheck::judge request) =? (ScrollThreadCheck::answerOk)))
+  body: ((((((((((project request place) <? 2) && ((project request kind) <? 7)) && ((project request outside) <? 2)) && ((project request walk) <? 4)) && ((project request rows) <? 4)) && ((project request provenance) <? 3)) && ((project request fact) <? 5)) && ((project request walk) =? (ScrollThreadCheck::walkLost))) && ((ScrollThreadCheck::judge request) =? (ScrollThreadCheck::answerOk)))
 }
 
 theorem{
@@ -152,6 +158,7 @@ theorem{
       ScrollThreadCheck::answerFactnoledger,
       ScrollThreadCheck::answerFactunderived,
       ScrollThreadCheck::answerGapunderived,
+      ScrollThreadCheck::answerLooserecord,
       ScrollThreadCheck::answerNoprovenance,
       ScrollThreadCheck::answerOk,
       ScrollThreadCheck::answerRootkind,
@@ -183,6 +190,7 @@ theorem{
       ScrollThreadCheck::rowsMissing,
       ScrollThreadCheck::rowsNone,
       ScrollThreadCheck::rule1,
+      ScrollThreadCheck::rule10,
       ScrollThreadCheck::rule2,
       ScrollThreadCheck::rule3,
       ScrollThreadCheck::rule4,
@@ -191,20 +199,21 @@ theorem{
       ScrollThreadCheck::rule7,
       ScrollThreadCheck::rule8,
       ScrollThreadCheck::rule9,
+      ScrollThreadCheck::walkLoose,
       ScrollThreadCheck::walkLost,
       ScrollThreadCheck::walkReached,
       ScrollThreadCheck::walkUnreached,
       breaksInv003
     ]
   },
-  axioms: [Quot.sound, propext]
+  axioms: [Classical.choice, Quot.sound, propext]
 }
 
 definition{
   name: breaksInv004,
   parameters: [request : ScrollThreadCheck::Request],
   result: Bool,
-  body: ((((((((((project request place) <? 2) && ((project request kind) <? 7)) && ((project request outside) <? 2)) && ((project request walk) <? 3)) && ((project request rows) <? 4)) && ((project request provenance) <? 3)) && ((project request fact) <? 5)) && ((project request fact) =? (ScrollThreadCheck::factUnderived))) && ((ScrollThreadCheck::judge request) =? (ScrollThreadCheck::answerOk)))
+  body: ((((((((((project request place) <? 2) && ((project request kind) <? 7)) && ((project request outside) <? 2)) && ((project request walk) <? 4)) && ((project request rows) <? 4)) && ((project request provenance) <? 3)) && ((project request fact) <? 5)) && ((project request fact) =? (ScrollThreadCheck::factUnderived))) && ((ScrollThreadCheck::judge request) =? (ScrollThreadCheck::answerOk)))
 }
 
 theorem{
@@ -217,6 +226,7 @@ theorem{
       ScrollThreadCheck::answerFactnoledger,
       ScrollThreadCheck::answerFactunderived,
       ScrollThreadCheck::answerGapunderived,
+      ScrollThreadCheck::answerLooserecord,
       ScrollThreadCheck::answerNoprovenance,
       ScrollThreadCheck::answerOk,
       ScrollThreadCheck::answerRootkind,
@@ -248,6 +258,7 @@ theorem{
       ScrollThreadCheck::rowsMissing,
       ScrollThreadCheck::rowsNone,
       ScrollThreadCheck::rule1,
+      ScrollThreadCheck::rule10,
       ScrollThreadCheck::rule2,
       ScrollThreadCheck::rule3,
       ScrollThreadCheck::rule4,
@@ -256,20 +267,21 @@ theorem{
       ScrollThreadCheck::rule7,
       ScrollThreadCheck::rule8,
       ScrollThreadCheck::rule9,
+      ScrollThreadCheck::walkLoose,
       ScrollThreadCheck::walkLost,
       ScrollThreadCheck::walkReached,
       ScrollThreadCheck::walkUnreached,
       breaksInv004
     ]
   },
-  axioms: [Quot.sound, propext]
+  axioms: [Classical.choice, Quot.sound, propext]
 }
 
 definition{
   name: breaksInv005,
   parameters: [request : ScrollThreadCheck::Request],
   result: Bool,
-  body: (((((((((((project request place) <? 2) && ((project request kind) <? 7)) && ((project request outside) <? 2)) && ((project request walk) <? 3)) && ((project request rows) <? 4)) && ((project request provenance) <? 3)) && ((project request fact) <? 5)) && ((project request place) =? (ScrollThreadCheck::placeFirst))) && (not ((project request kind) =? (ScrollThreadCheck::kindRoot)))) && ((ScrollThreadCheck::judge request) =? (ScrollThreadCheck::answerOk)))
+  body: (((((((((((project request place) <? 2) && ((project request kind) <? 7)) && ((project request outside) <? 2)) && ((project request walk) <? 4)) && ((project request rows) <? 4)) && ((project request provenance) <? 3)) && ((project request fact) <? 5)) && ((project request place) =? (ScrollThreadCheck::placeFirst))) && (not ((project request kind) =? (ScrollThreadCheck::kindRoot)))) && ((ScrollThreadCheck::judge request) =? (ScrollThreadCheck::answerOk)))
 }
 
 theorem{
@@ -282,6 +294,7 @@ theorem{
       ScrollThreadCheck::answerFactnoledger,
       ScrollThreadCheck::answerFactunderived,
       ScrollThreadCheck::answerGapunderived,
+      ScrollThreadCheck::answerLooserecord,
       ScrollThreadCheck::answerNoprovenance,
       ScrollThreadCheck::answerOk,
       ScrollThreadCheck::answerRootkind,
@@ -313,6 +326,7 @@ theorem{
       ScrollThreadCheck::rowsMissing,
       ScrollThreadCheck::rowsNone,
       ScrollThreadCheck::rule1,
+      ScrollThreadCheck::rule10,
       ScrollThreadCheck::rule2,
       ScrollThreadCheck::rule3,
       ScrollThreadCheck::rule4,
@@ -321,10 +335,79 @@ theorem{
       ScrollThreadCheck::rule7,
       ScrollThreadCheck::rule8,
       ScrollThreadCheck::rule9,
+      ScrollThreadCheck::walkLoose,
       ScrollThreadCheck::walkLost,
       ScrollThreadCheck::walkReached,
       ScrollThreadCheck::walkUnreached,
       breaksInv005
+    ]
+  },
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: breaksInv006,
+  parameters: [request : ScrollThreadCheck::Request],
+  result: Bool,
+  body: (((((((((((project request place) <? 2) && ((project request kind) <? 7)) && ((project request outside) <? 2)) && ((project request walk) <? 4)) && ((project request rows) <? 4)) && ((project request provenance) <? 3)) && ((project request fact) <? 5)) && ((project request kind) =? (ScrollThreadCheck::kindRecord))) && ((project request walk) =? (ScrollThreadCheck::walkLoose))) && ((ScrollThreadCheck::judge request) =? (ScrollThreadCheck::answerOk)))
+}
+
+theorem{
+  name: inv006Holds,
+  parameters: [request : ScrollThreadCheck::Request],
+  statement: ((breaksInv006 request) = false),
+  proof: linear_arithmetic{
+    definitions: [
+      ScrollThreadCheck::answerDangling,
+      ScrollThreadCheck::answerFactnoledger,
+      ScrollThreadCheck::answerFactunderived,
+      ScrollThreadCheck::answerGapunderived,
+      ScrollThreadCheck::answerLooserecord,
+      ScrollThreadCheck::answerNoprovenance,
+      ScrollThreadCheck::answerOk,
+      ScrollThreadCheck::answerRootkind,
+      ScrollThreadCheck::answerRowmissing,
+      ScrollThreadCheck::answerRowsmismatch,
+      ScrollThreadCheck::answerUnreachable,
+      ScrollThreadCheck::factDerived,
+      ScrollThreadCheck::factGapunderived,
+      ScrollThreadCheck::factNoledger,
+      ScrollThreadCheck::factNone,
+      ScrollThreadCheck::factUnderived,
+      ScrollThreadCheck::judge,
+      ScrollThreadCheck::kindBlob,
+      ScrollThreadCheck::kindCheck,
+      ScrollThreadCheck::kindGap,
+      ScrollThreadCheck::kindLedger,
+      ScrollThreadCheck::kindRecord,
+      ScrollThreadCheck::kindRoot,
+      ScrollThreadCheck::kindSummary,
+      ScrollThreadCheck::outsideNone,
+      ScrollThreadCheck::outsideSome,
+      ScrollThreadCheck::placeFirst,
+      ScrollThreadCheck::placeOther,
+      ScrollThreadCheck::provenanceBroken,
+      ScrollThreadCheck::provenanceSound,
+      ScrollThreadCheck::provenanceUnlisted,
+      ScrollThreadCheck::rowsMatch,
+      ScrollThreadCheck::rowsMismatch,
+      ScrollThreadCheck::rowsMissing,
+      ScrollThreadCheck::rowsNone,
+      ScrollThreadCheck::rule1,
+      ScrollThreadCheck::rule10,
+      ScrollThreadCheck::rule2,
+      ScrollThreadCheck::rule3,
+      ScrollThreadCheck::rule4,
+      ScrollThreadCheck::rule5,
+      ScrollThreadCheck::rule6,
+      ScrollThreadCheck::rule7,
+      ScrollThreadCheck::rule8,
+      ScrollThreadCheck::rule9,
+      ScrollThreadCheck::walkLoose,
+      ScrollThreadCheck::walkLost,
+      ScrollThreadCheck::walkReached,
+      ScrollThreadCheck::walkUnreached,
+      breaksInv006
     ]
   },
   axioms: [Classical.choice, Quot.sound, propext]

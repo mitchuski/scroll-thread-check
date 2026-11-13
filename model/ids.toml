@@ -52,6 +52,12 @@ suite = "scroll_thread_check"
 statement = "The app never answers ok when place is first and kind is not root"
 
 [[id]]
+id = "ST-06"
+level = "build"
+suite = "scroll_thread_check"
+statement = "The app never answers ok when kind is record and walk is loose"
+
+[[id]]
 id = "FR-01"
 level = "build"
 suite = "frame"

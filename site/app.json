@@ -2,7 +2,7 @@
   "name": "Scroll Thread Check",
   "shortName": "Scroll",
   "live": "https://mitchuski.github.io/scroll-thread-check/",
-  "purpose": "Decide which structural rule of a mage's sealed scroll, if any, one hash breaks, from the facts the host read about that hash's threads. Send place, kind, outside, walk, rows, provenance or fact, separated by spaces; it answers ok, rootkind, dangling, unreachable, rowsmismatch, rowmissing, noprovenance, factnoledger, factunderived or gapunderived, and invalid request for anything else.",
+  "purpose": "Decide which structural rule of a mage's sealed scroll, if any, one hash breaks, from the facts the host read about that hash's threads. Send place, kind, outside, walk, rows, provenance or fact, separated by spaces; it answers ok, rootkind, dangling, unreachable, rowsmismatch, rowmissing, noprovenance, factnoledger, factunderived, gapunderived or looserecord, and invalid request for anything else.",
   "inputLabel": "Request: place kind outside walk rows provenance fact",
   "placeholder": "first root none reached none unlisted none",
   "submitLabel": "Decide",
@@ -20,7 +20,8 @@
       "noprovenance",
       "factnoledger",
       "factunderived",
-      "gapunderived"
+      "gapunderived",
+      "looserecord"
     ],
     "refusal": "invalid request"
   },
@@ -28,10 +29,10 @@
     "headline": "Says conformant exactly when every policy file matches its lock.",
     "detail": "Each of the six universal policy files is compared with the digest the lock records, and any file that drifted is named."
   },
-  "claim": "ST-01: the app never answers ok when provenance is broken. ST-02: the app never answers ok when walk is reached and outside is some. ST-03: the app never answers ok when walk is lost. ST-04: the app never answers ok when fact is underived. ST-05: the app never answers ok when place is first and kind is not root.",
+  "claim": "ST-01: the app never answers ok when provenance is broken. ST-02: the app never answers ok when walk is reached and outside is some. ST-03: the app never answers ok when walk is lost. ST-04: the app never answers ok when fact is underived. ST-05: the app never answers ok when place is first and kind is not root. ST-06: the app never answers ok when kind is record and walk is loose.",
   "proposition": {
     "name": "judge",
-    "text": "judge request :=\n  place is first and kind is not root → rootkind\n  walk is reached and outside is some → dangling\n  walk is lost → unreachable\n  rows is mismatch → rowsmismatch\n  rows is missing → rowmissing\n  provenance is broken → noprovenance\n  fact is noledger → factnoledger\n  fact is underived → factunderived\n  fact is gapunderived → gapunderived\n  otherwise → ok",
+    "text": "judge request :=\n  place is first and kind is not root → rootkind\n  walk is reached and outside is some → dangling\n  walk is lost → unreachable\n  rows is mismatch → rowsmismatch\n  rows is missing → rowmissing\n  provenance is broken → noprovenance\n  fact is noledger → factnoledger\n  fact is underived → factunderived\n  fact is gapunderived → gapunderived\n  kind is record and walk is loose → looserecord\n  otherwise → ok",
     "plain": "Decide which structural rule of a mage's sealed scroll, if any, one hash breaks, from the facts the host read about that hash's threads."
   },
   "theorems": [
@@ -64,6 +65,12 @@
       "statement": "no request meets breaksInv005: the app never answers ok when place is first and kind is not root",
       "how": "Proved by linear arithmetic, checked by the Lean kernel on the UOR MCP server and again by prismpm verify in CI",
       "where": "app/src/ScrollThreadCheckProofs.lex.tex"
+    },
+    {
+      "name": "inv006Holds",
+      "statement": "no request meets breaksInv006: the app never answers ok when kind is record and walk is loose",
+      "how": "Proved by linear arithmetic, checked by the Lean kernel on the UOR MCP server and again by prismpm verify in CI",
+      "where": "app/src/ScrollThreadCheckProofs.lex.tex"
     }
   ],
   "pinned": [
@@ -91,6 +98,11 @@
       "name": "scroll_thread_check_st_05",
       "what": "ST-05's condition and the theorem that no request meets it. A string-matching test, not a theorem: a planted defect fails it.",
       "where": "crates/conformance/tests/scroll_thread_check.rs"
+    },
+    {
+      "name": "scroll_thread_check_st_06",
+      "what": "ST-06's condition and the theorem that no request meets it. A string-matching test, not a theorem: a planted defect fails it.",
+      "where": "crates/conformance/tests/scroll_thread_check.rs"
     }
   ],
   "trusted": [
@@ -117,7 +129,7 @@
   ],
   "attestations": {
     "proof": {
-      "id": "4783548cc4e91426d4b44dcc665fa0a31b4dc29a6917e8fd0c19f8f1da561e6e",
+      "id": "63ccff362427c05fc270b6f4ac8324953e4fc09a3d792e7108d5e35a2988e98e",
       "url": "https://github.com/mitchuski/scroll-thread-check/actions/workflows/bootstrap.yml"
     },
     "build": {

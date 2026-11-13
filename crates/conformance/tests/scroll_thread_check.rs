@@ -49,7 +49,7 @@ fn pinned(breaks: &str, condition: &str, theorem: &str) {
 fn scroll_thread_check_st_01() {
     pinned(
         "breaksInv001",
-        "body: ((((((((((project request place) <? 2) && ((project request kind) <? 7)) && ((project request outside) <? 2)) && ((project request walk) <? 3)) && ((project request rows) <? 4)) && ((project request provenance) <? 3)) && ((project request fact) <? 5)) && ((project request provenance) =? (ScrollThreadCheck::provenanceBroken))) && ((ScrollThreadCheck::judge request) =? (ScrollThreadCheck::answerOk)))",
+        "body: ((((((((((project request place) <? 2) && ((project request kind) <? 7)) && ((project request outside) <? 2)) && ((project request walk) <? 4)) && ((project request rows) <? 4)) && ((project request provenance) <? 3)) && ((project request fact) <? 5)) && ((project request provenance) =? (ScrollThreadCheck::provenanceBroken))) && ((ScrollThreadCheck::judge request) =? (ScrollThreadCheck::answerOk)))",
         "inv001Holds",
     );
 }
@@ -59,7 +59,7 @@ fn scroll_thread_check_st_01() {
 fn scroll_thread_check_st_02() {
     pinned(
         "breaksInv002",
-        "body: (((((((((((project request place) <? 2) && ((project request kind) <? 7)) && ((project request outside) <? 2)) && ((project request walk) <? 3)) && ((project request rows) <? 4)) && ((project request provenance) <? 3)) && ((project request fact) <? 5)) && ((project request walk) =? (ScrollThreadCheck::walkReached))) && ((project request outside) =? (ScrollThreadCheck::outsideSome))) && ((ScrollThreadCheck::judge request) =? (ScrollThreadCheck::answerOk)))",
+        "body: (((((((((((project request place) <? 2) && ((project request kind) <? 7)) && ((project request outside) <? 2)) && ((project request walk) <? 4)) && ((project request rows) <? 4)) && ((project request provenance) <? 3)) && ((project request fact) <? 5)) && ((project request walk) =? (ScrollThreadCheck::walkReached))) && ((project request outside) =? (ScrollThreadCheck::outsideSome))) && ((ScrollThreadCheck::judge request) =? (ScrollThreadCheck::answerOk)))",
         "inv002Holds",
     );
 }
@@ -69,7 +69,7 @@ fn scroll_thread_check_st_02() {
 fn scroll_thread_check_st_03() {
     pinned(
         "breaksInv003",
-        "body: ((((((((((project request place) <? 2) && ((project request kind) <? 7)) && ((project request outside) <? 2)) && ((project request walk) <? 3)) && ((project request rows) <? 4)) && ((project request provenance) <? 3)) && ((project request fact) <? 5)) && ((project request walk) =? (ScrollThreadCheck::walkLost))) && ((ScrollThreadCheck::judge request) =? (ScrollThreadCheck::answerOk)))",
+        "body: ((((((((((project request place) <? 2) && ((project request kind) <? 7)) && ((project request outside) <? 2)) && ((project request walk) <? 4)) && ((project request rows) <? 4)) && ((project request provenance) <? 3)) && ((project request fact) <? 5)) && ((project request walk) =? (ScrollThreadCheck::walkLost))) && ((ScrollThreadCheck::judge request) =? (ScrollThreadCheck::answerOk)))",
         "inv003Holds",
     );
 }
@@ -79,7 +79,7 @@ fn scroll_thread_check_st_03() {
 fn scroll_thread_check_st_04() {
     pinned(
         "breaksInv004",
-        "body: ((((((((((project request place) <? 2) && ((project request kind) <? 7)) && ((project request outside) <? 2)) && ((project request walk) <? 3)) && ((project request rows) <? 4)) && ((project request provenance) <? 3)) && ((project request fact) <? 5)) && ((project request fact) =? (ScrollThreadCheck::factUnderived))) && ((ScrollThreadCheck::judge request) =? (ScrollThreadCheck::answerOk)))",
+        "body: ((((((((((project request place) <? 2) && ((project request kind) <? 7)) && ((project request outside) <? 2)) && ((project request walk) <? 4)) && ((project request rows) <? 4)) && ((project request provenance) <? 3)) && ((project request fact) <? 5)) && ((project request fact) =? (ScrollThreadCheck::factUnderived))) && ((ScrollThreadCheck::judge request) =? (ScrollThreadCheck::answerOk)))",
         "inv004Holds",
     );
 }
@@ -89,7 +89,17 @@ fn scroll_thread_check_st_04() {
 fn scroll_thread_check_st_05() {
     pinned(
         "breaksInv005",
-        "body: (((((((((((project request place) <? 2) && ((project request kind) <? 7)) && ((project request outside) <? 2)) && ((project request walk) <? 3)) && ((project request rows) <? 4)) && ((project request provenance) <? 3)) && ((project request fact) <? 5)) && ((project request place) =? (ScrollThreadCheck::placeFirst))) && (not ((project request kind) =? (ScrollThreadCheck::kindRoot)))) && ((ScrollThreadCheck::judge request) =? (ScrollThreadCheck::answerOk)))",
+        "body: (((((((((((project request place) <? 2) && ((project request kind) <? 7)) && ((project request outside) <? 2)) && ((project request walk) <? 4)) && ((project request rows) <? 4)) && ((project request provenance) <? 3)) && ((project request fact) <? 5)) && ((project request place) =? (ScrollThreadCheck::placeFirst))) && (not ((project request kind) =? (ScrollThreadCheck::kindRoot)))) && ((ScrollThreadCheck::judge request) =? (ScrollThreadCheck::answerOk)))",
         "inv005Holds",
+    );
+}
+
+/// `ST-06`: The app never answers ok when kind is record and walk is loose
+#[test]
+fn scroll_thread_check_st_06() {
+    pinned(
+        "breaksInv006",
+        "body: (((((((((((project request place) <? 2) && ((project request kind) <? 7)) && ((project request outside) <? 2)) && ((project request walk) <? 4)) && ((project request rows) <? 4)) && ((project request provenance) <? 3)) && ((project request fact) <? 5)) && ((project request kind) =? (ScrollThreadCheck::kindRecord))) && ((project request walk) =? (ScrollThreadCheck::walkLoose))) && ((ScrollThreadCheck::judge request) =? (ScrollThreadCheck::answerOk)))",
+        "inv006Holds",
     );
 }

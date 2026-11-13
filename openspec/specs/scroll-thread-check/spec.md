@@ -68,6 +68,18 @@ Verified: proved by Lean for every request (INV-005, theorem `inv005Holds`).
 - **THEN** the answer SHALL NOT be `ok`
 - **AND** the app answers `rootkind`, decided by REQ-001
 
+### Requirement: Never ok when kind is record and walk is loose
+
+The app SHALL NOT answer `ok` when kind is record and walk is loose, because a record nothing ties in is a result the scroll carries but no thread vouches for; cutting showed 1,241 such records slipped past v1.
+
+Verified: proved by Lean for every request (INV-006, theorem `inv006Holds`).
+
+#### Scenario: INV-006 holds
+
+- **WHEN** the request is `other record none loose none unlisted none` (an acceptance example)
+- **THEN** the answer SHALL NOT be `ok`
+- **AND** the app answers `looserecord`, decided by REQ-010
+
 ### Requirement: REQ-001 rootkind when place is first and kind is not root
 
 The app SHALL answer `rootkind` when place is first and kind is not root, because verify_bundle rule 1: a scroll starts at its run-root.
@@ -167,6 +179,17 @@ Verified: tested by the acceptance vectors (`rule9`).
 - **WHEN** the request is `other gap none unreached none unlisted gapunderived` (an acceptance example)
 - **THEN** the answer SHALL be `gapunderived`, decided by REQ-009
 
+### Requirement: REQ-010 looserecord when kind is record and walk is loose
+
+The app SHALL answer `looserecord` when kind is record and walk is loose and no earlier rule matches, because v2, written from the gaps: a record must be tied into the scroll by some thread; it enforces INV-006.
+
+Verified: tested by the acceptance vectors (`rule10`).
+
+#### Scenario: REQ-010 decides
+
+- **WHEN** the request is `other record none loose none unlisted none` (an acceptance example)
+- **THEN** the answer SHALL be `looserecord`, decided by REQ-010
+
 ### Requirement: Otherwise ok
 
 The app SHALL answer `ok` when no rule matches, because no structural rule applies to this hash.
@@ -180,7 +203,7 @@ Verified: tested by the acceptance vectors.
 
 ### Requirement: The first matching rule decides
 
-The app SHALL try REQ-001, REQ-002, REQ-003, REQ-004, REQ-005, REQ-006, REQ-007, REQ-008, REQ-009 in that order, and the first rule that matches SHALL decide.
+The app SHALL try REQ-001, REQ-002, REQ-003, REQ-004, REQ-005, REQ-006, REQ-007, REQ-008, REQ-009, REQ-010 in that order, and the first rule that matches SHALL decide.
 
 Verified: tested by the acceptance vectors.
 
@@ -191,14 +214,14 @@ Verified: tested by the acceptance vectors.
 
 ### Requirement: Request and answers
 
-The app SHALL read one request as one line of 7 fields separated by single spaces, in this order, and SHALL answer exactly one of `ok`, `rootkind`, `dangling`, `unreachable`, `rowsmismatch`, `rowmissing`, `noprovenance`, `factnoledger`, `factunderived`, `gapunderived`, or `invalid` for anything else.
+The app SHALL read one request as one line of 7 fields separated by single spaces, in this order, and SHALL answer exactly one of `ok`, `rootkind`, `dangling`, `unreachable`, `rowsmismatch`, `rowmissing`, `noprovenance`, `factnoledger`, `factunderived`, `gapunderived`, `looserecord`, or `invalid` for anything else.
 
 | Field | Accepts | Means |
 | --- | --- | --- |
 | `place` | `first`, `other` | whether this hash is the scroll's first object, the one the root must be |
 | `kind` | `root`, `ledger`, `record`, `blob`, `check`, `summary`, `gap` | the kind of object this hash names |
 | `outside` | `none`, `some` | whether any of its composed-of threads points outside the scroll |
-| `walk` | `reached`, `unreached`, `lost` | whether a walk of composed-of threads from the root reaches it; lost when the root names it as a ledger, check or summary and the walk never reaches it |
+| `walk` | `reached`, `unreached`, `lost`, `loose` | whether a walk of composed-of threads from the root reaches it; lost when the root names it as a ledger, check or summary and the walk never reaches it; loose when the walk never reaches it and no thread of any kind ties it in |
 | `rows` | `none`, `match`, `mismatch`, `missing` | for a declared ledger: whether its composed-of threads equal its declared rows, differ from them, or declare a row that is absent or a blob |
 | `provenance` | `unlisted`, `sound`, `broken` | for a hash some ledger lists as a row: whether every provenance thread reaches a blob in the scroll, or one is missing or wrong |
 | `fact` | `none`, `derived`, `underived`, `noledger`, `gapunderived` | for a check or summary: derived from its ledger, not derived, or naming something that is not a ledger; for a gap: derived from its proposal, or gapunderived |
@@ -215,6 +238,7 @@ The app SHALL read one request as one line of 7 fields separated by single space
 | `factnoledger` | a check or summary names something that is not a ledger |
 | `factunderived` | a check or summary has no derived-from thread to its ledger |
 | `gapunderived` | a gap has no derived-from thread to its proposal |
+| `looserecord` | a record that no thread of any kind ties into the scroll |
 | `invalid` | the request is malformed |
 
 Verified: reading a request is tested, not proved.
@@ -227,9 +251,11 @@ Verified: reading a request is tested, not proved.
 ## Out of scope
 
 - Hashing, decoding and the scroll's seal are the host's: it reads each fact from the scroll and the model trusts them (structure proven, hashing attested).
-- The whole-scroll verdict is the host's fold of these: the first rule in order, then the lowest index (rows in the order the ledgers declare them), as verify_bundle.py orders them.
+- The whole-scroll verdict is the host's fold of these: the first rule in order, then the lowest index (rows in the order the ledgers declare them), as verify_bundle.py orders them; looserecord comes last.
 - A named index past the end of the scroll (named-absent) and an unreadable request (malformed) are decided by the host before any hash is judged.
 - A composed-of thread out of the scroll from a hash the walk never reaches is not a defect; the walk is what is checked.
+- A loose blob is not a defect: sealed scrolls name thousands of blobs with no thread into them, so blobs are guarded by the seal, not by these rules.
+- A record tied in only by derived-from threads, outside every ledger, is not loose.
 
 ## Examples
 
@@ -247,6 +273,9 @@ Verified: reading a request is tested, not proved.
 - `other check none reached none unlisted derived` gives `ok`
 - `other blob none unreached none unlisted none` gives `ok`
 - `other record some unreached none sound none` gives `ok`
+- `other record none loose none unlisted none` gives `looserecord`
+- `other blob none loose none unlisted none` gives `ok`
+- `other record none unreached none unlisted none` gives `ok`
 
 ## What is proved and what is tested
 

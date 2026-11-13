@@ -33,6 +33,7 @@ model does not sanction.
 | `ST-03` | `build` | The app never answers ok when walk is lost |
 | `ST-04` | `build` | The app never answers ok when fact is underived |
 | `ST-05` | `build` | The app never answers ok when place is first and kind is not root |
+| `ST-06` | `build` | The app never answers ok when kind is record and walk is loose |
 
 ## Cited authorities
 
