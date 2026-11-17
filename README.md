@@ -13,6 +13,8 @@ can never answer `ok`.
   which loads the holo in your browser, checks its fingerprint and replays its examples.
 - **The trinket that lights by these rules:** [prism.mages.city](https://prism.mages.city/),
   the Mages City Prism, which reads any mage's scroll.
+- **The host half:** [`host/`](host/), which reads a whole scroll, asks the app
+  about each hash and folds the answers into one verdict. Run it with `node host/check.mjs`.
 - **Spec:** [`openspec/specs/scroll-thread-check/spec.md`](openspec/specs/scroll-thread-check/spec.md).
 - **Model:** [`app/src/ScrollThreadCheck.lex.tex`](app/src/ScrollThreadCheck.lex.tex)
   and its proofs, [`app/src/ScrollThreadCheckProofs.lex.tex`](app/src/ScrollThreadCheckProofs.lex.tex).
@@ -72,8 +74,29 @@ function it is; `vectors` needs no policy.
 
 - Hashing, decoding and the seal are the host's; the model trusts the facts it is given.
 - The whole-scroll verdict is the host's fold: the first rule in order, then the lowest index.
+  The fold is in [`host/`](host/), and it is tested, not proved.
 - A loose blob is not a defect. Sealed scrolls name many blobs with no thread
   into them, so blobs are guarded by the seal, not by these rules.
+
+## In the Prism
+
+The [Prism](https://prism.mages.city/) is the Mages City trinket that reads
+any mage's scroll as a star. When it lights a scroll, the verdict it shows
+comes from these rules:
+
+```text
+scroll ──host/ project──▶ a request per hash ──this app──▶ answers ──host/ fold──▶ the light
+```
+
+The Prism runs the rules as JavaScript (`host/decide.js` plus the loose-record
+rule), so that a page can light without fetching the holo. The holo checks
+that copy: over 1,792 test scrolls (sealed scrolls and their cuts), the holo's
+answers, folded by `host/`, agree with the Prism's light on every one. The
+Prism's details panel names the holo it agrees with (`22161e68…`) and links back here.
+
+To change a rule, change the model and its proofs, rebuild the holo, update
+the matching rule in `host/` and in the Prism, then run
+`node host/check.mjs --holo app.holo` until it agrees again.
 
 ## Built on the UOR Prism template
 
@@ -92,11 +115,7 @@ whose README covers building, publishing and the gate in full.
 | `just model-write` | Regenerates `CONFORMANCE.md` from `model/`. |
 | `just fmt` | Formats the workspace. |
 | `just bdd` | Runs only the conformance meta-gate while you write scenarios. |
-
-## Built from this template
-
-- [MCP](https://github.com/UOR-Foundation/MCP): the Model Context Protocol, implemented as a server protocol core in LexLean and accepted only on MCP's own conformance oracles.
-- [lexlean-mcp](https://github.com/UOR-Foundation/lexlean-mcp): serves LexLean to LLM clients over MCP, linking that protocol core unchanged.
+| `node host/check.mjs [--holo app.holo]` | Runs the sample scrolls through the host half, and through the holo with `--holo`. |
 
 ## For coding agents
 
@@ -111,6 +130,8 @@ enforces, so a red `just vv` says which promise was broken.
 | `app/` | project | The Prism application: its LexLean model, the Foundation library it imports, and its PrismPM manifest. |
 | `model/` | project | The claim, authority and ledger registers: the single source of every claim (R1). |
 | `features/suites/` | project | One Gherkin scenario per registered ID (R3). |
+| `host/` | project | The host half: project, fold, the reference `decide.js` and sample scrolls. Tested, not proved. |
+| `site/` | project | The live page: `app.json` holds its words, and the template draws the rest. |
 | `CONFORMANCE.md` | generated | Written by `just model-write`, never by hand. |
 | `crates/model`, `crates/conformance` | template | The register parser and the honesty meta-gate. |
 | `xtask/` | template | The repository gates and the `new-capability` scaffold. |
