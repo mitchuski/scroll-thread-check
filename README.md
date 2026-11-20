@@ -3,8 +3,8 @@
 Decide which structural rule of a mage's sealed scroll, if any, one hash
 breaks, from the facts the host read about that hash's threads.
 
-A scroll is a sealed κ-evidence bundle: a run-root, ledgers, records, checks,
-summaries, gaps and blobs, each named by its hash and tied together by
+A scroll is a sealed [κ-evidence](https://github.com/mitchuski/kappa-evidence-mage)
+bundle: a run-root, ledgers, records, checks, summaries, gaps and blobs, each named by its hash and tied together by
 composed-of, provenance and derived-from threads. The host reads the facts
 about one hash; this app decides the answer. Lean proves that six bad shapes
 can never answer `ok`.
@@ -38,6 +38,21 @@ held cut into a record became this rule, and no sealed scroll breaks it.
 
 Everything else is tested, not proved: the ten rules and their order are
 covered by the holo's acceptance vectors, and reading a request is tested.
+
+## Where it sits
+
+Checking a scroll takes three pieces, each with one job.
+
+| Piece | What it checks | How far it is assured |
+| --- | --- | --- |
+| [κ evidence](https://github.com/mitchuski/kappa-evidence-mage) | The bytes: every name is the hash of its content, every stated fact recomputes, and the Merkle root holds. | Tested against upstream vectors in three implementations; the Merkle and chain rules are proved in Lean. |
+| Scroll Thread Check (this repository) | The shape: which structural rule, if any, one hash breaks. | Six rules proved in Lean for every request; the rest tested. |
+| [`host/`](host/) and the [Prism](https://prism.mages.city/) | The verdict for a whole scroll. | Tested, and held equal to the holo on 1,792 scrolls. |
+
+The κ-evidence verifier also walks a bundle's threads as part of verifying it.
+This app is where those structural rules are stated one at a time and proved.
+To watch the byte-level check run on a real bundle, and break it, open
+[The Scrying Stone](https://scry.mages.city/).
 
 ## Ask it
 

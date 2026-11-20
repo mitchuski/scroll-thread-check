@@ -26,8 +26,8 @@
     "refusal": "invalid request"
   },
   "promise": {
-    "headline": "Says conformant exactly when every policy file matches its lock.",
-    "detail": "Each of the six universal policy files is compared with the digest the lock records, and any file that drifted is named."
+    "headline": "Never answers ok for a hash that breaks one of six proved rules.",
+    "detail": "Lean proves, for every request, that six bad shapes of a sealed scroll can never be answered ok. The other rules and their order are tested by the acceptance vectors the holo carries."
   },
   "claim": "ST-01: the app never answers ok when provenance is broken. ST-02: the app never answers ok when walk is reached and outside is some. ST-03: the app never answers ok when walk is lost. ST-04: the app never answers ok when fact is underived. ST-05: the app never answers ok when place is first and kind is not root. ST-06: the app never answers ok when kind is record and walk is loose.",
   "proposition": {
